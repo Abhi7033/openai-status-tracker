@@ -17,6 +17,7 @@ Built as a submission for the Bolna Backend Engineering Hackathon.
 - [Configuration](#configuration)
 - [Scaling to 100+ Providers](#scaling-to-100-providers)
 - [Testing](#testing)
+- [Deployment](#deployment)
 - [Project Structure](#project-structure)
 
 ---
@@ -267,12 +268,29 @@ The test suite covers:
 
 ---
 
+## Deployment
+
+### Docker
+
+```bash
+docker build -t openai-status-tracker .
+docker run --rm openai-status-tracker
+```
+
+### Render
+
+A `render.yaml` is included for one-click deployment as a background worker.
+
+---
+
 ## Project Structure
 
 ```
 openai-status-tracker/
 ├── config.yaml              # Provider and settings configuration
 ├── requirements.txt         # Python dependencies
+├── Dockerfile               # Container deployment
+├── render.yaml              # Render.com worker deployment
 ├── README.md
 ├── tracker/
 │   ├── __init__.py
