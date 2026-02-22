@@ -1,0 +1,35 @@
+# ─────────────────────────────────────────────────────────────
+# OpenAI Status Tracker — Configuration
+# ─────────────────────────────────────────────────────────────
+# Add more providers below to scale to 100+ status pages.
+# Each provider needs a name, feed URL, feed type, and poll interval.
+
+providers:
+  - name: OpenAI
+    feed_url: https://status.openai.com/history.atom
+    feed_type: atom            # "atom" or "rss"
+    poll_interval: 30          # seconds between checks
+
+  # ── Uncomment to monitor additional providers ──────────────
+  # - name: GitHub
+  #   feed_url: https://www.githubstatus.com/history.atom
+  #   feed_type: atom
+  #   poll_interval: 30
+
+  # - name: Stripe
+  #   feed_url: https://status.stripe.com/history.atom
+  #   feed_type: atom
+  #   poll_interval: 45
+
+  # - name: Twilio
+  #   feed_url: https://status.twilio.com/history.atom
+  #   feed_type: atom
+  #   poll_interval: 45
+
+# Global settings
+settings:
+  log_level: INFO              # DEBUG | INFO | WARNING | ERROR
+  max_retries: 5               # max retry attempts on failure
+  base_backoff: 2              # base seconds for exponential backoff
+  show_historical: true        # show existing incidents on first run
+  max_historical: 10           # how many historical incidents to show on startup
