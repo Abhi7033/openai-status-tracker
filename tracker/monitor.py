@@ -25,6 +25,7 @@ import aiohttp
 from tracker.feed_parser import parse_feed
 from tracker.models import Incident, ProviderConfig, TrackerSettings
 from tracker import notifier
+import tracker as _tracker
 
 
 class FeedMonitor:
@@ -155,6 +156,7 @@ class FeedMonitor:
             for inc in incidents:
                 self._seen_ids.add(inc.id)
                 self._seen_updates[inc.id] = self._incident_hash(inc)
+                _tracker.incident_count += 1
             notifier.print_watching()
             return
 
@@ -168,12 +170,14 @@ class FeedMonitor:
                 notifier.print_incident(inc, is_new=True)
                 self._seen_ids.add(inc.id)
                 self._seen_updates[inc.id] = inc_hash
+                _tracker.incident_count += 1
 
             elif self._seen_updates.get(inc.id) != inc_hash:
                 # Existing incident got updated
                 notifier.print_separator()
                 notifier.print_incident(inc, is_new=False)
                 self._seen_updates[inc.id] = inc_hash
+                _tracker.incident_count += 1
 
     def _backoff_delay(self) -> float:
         """

@@ -6,3 +6,6 @@ from OpenAI (and any Atom/RSS-based status page) efficiently.
 """
 
 __version__ = "1.0.0"
+
+# Shared incident counter for the health-check endpoint
+incident_count = 0

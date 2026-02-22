@@ -25,6 +25,7 @@ from tracker.config import load_config
 from tracker.models import ProviderConfig, TrackerSettings
 from tracker.monitor import FeedMonitor
 from tracker import notifier
+import tracker as _tracker
 
 
 class StatusTracker:
@@ -106,7 +107,11 @@ async def async_main() -> None:
     # Start a minimal health-check server for hosted deployments
     port = int(os.environ.get("PORT", 10000))
     app = web.Application()
-    app.router.add_get("/", lambda _: web.json_response({"status": "running"}))
+    app.router.add_get("/", lambda _: web.json_response({
+        "status": "running",
+        "message": "OpenAI status tracker is active",
+        "tracked_incidents": _tracker.incident_count,
+    }))
     app.router.add_get("/health", lambda _: web.json_response({"status": "healthy"}))
     runner = web.AppRunner(app)
     await runner.setup()

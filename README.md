@@ -54,7 +54,7 @@ These are the **official machine-readable interfaces** for status updates. Most 
 
 ### Why Conditional HTTP (Not Blind Polling)
 
-Every request to the feed includes `ETag` and `If-Modified-Since` headers from the previous response. When the feed hasn't changed, the server responds with `304 Not Modified` — an empty response body that consumes almost zero bandwidth.
+The solution uses **efficient feed-based change detection with state tracking** rather than blind polling. Every request to the feed includes `ETag` and `If-Modified-Since` headers from the previous response. When the feed hasn't changed, the server responds with `304 Not Modified` — an empty response body that consumes almost zero bandwidth.
 
 As a second layer, feed responses are SHA-256 hashed locally. Even if the server doesn't support conditional headers, we skip parsing entirely when the content hash matches the previous poll.
 
