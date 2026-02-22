@@ -29,7 +29,7 @@ The task is to monitor the OpenAI Status Page and automatically detect when a ne
 
 The key constraint in the problem statement:
 
-> *"You should not rely on manually refreshing the page or polling it inefficiently — the expectation is to use a more event-based approach that can scale efficiently if the same solution were used to track 100+ similar status pages from different providers."*
+> *"You should not rely on manually refreshing the page or polling it inefficiently - the expectation is to use a more event-based approach that can scale efficiently if the same solution were used to track 100+ similar status pages from different providers."*
 
 This rules out naive approaches like periodic HTML scraping or brute-force polling. The solution must be bandwidth-efficient, change-aware, and architecturally ready to monitor many providers concurrently without linear resource growth.
 
@@ -52,7 +52,7 @@ These are the **official machine-readable interfaces** for status updates. Most 
 
 ### Why Conditional HTTP (Not Blind Polling)
 
-The solution uses **efficient feed-based change detection with state tracking** rather than blind polling. Every request to the feed includes `ETag` and `If-Modified-Since` headers from the previous response. When the feed hasn't changed, the server responds with `304 Not Modified` — an empty response body that consumes almost zero bandwidth.
+The solution uses **efficient feed-based change detection with state tracking** rather than blind polling. Every request to the feed includes `ETag` and `If-Modified-Since` headers from the previous response. When the feed hasn't changed, the server responds with `304 Not Modified` - an empty response body that consumes almost zero bandwidth.
 
 As a second layer, feed responses are SHA-256 hashed locally. Even if the server doesn't support conditional headers, we skip parsing entirely when the content hash matches the previous poll.
 
@@ -60,7 +60,7 @@ This makes the approach **near-zero-cost when nothing has changed**, which is th
 
 ### Why Async I/O (Not Threads)
 
-Each provider is monitored by a `FeedMonitor` coroutine running in a single `asyncio` event loop. Adding 100 providers does not spawn 100 threads or 100 processes — all I/O is multiplexed through `aiohttp` on one thread.
+Each provider is monitored by a `FeedMonitor` coroutine running in a single `asyncio` event loop. Adding 100 providers does not spawn 100 threads or 100 processes - all I/O is multiplexed through `aiohttp` on one thread.
 
 This is the same concurrency model used by production monitoring systems. Resource consumption stays flat regardless of provider count.
 
@@ -114,7 +114,7 @@ Data flow:
 | `main.py` | Entry point. Creates one `FeedMonitor` per provider, launches them concurrently, handles graceful shutdown. |
 | `monitor.py` | Core engine. Conditional HTTP fetching, content hashing, seen-ID tracking, backoff logic. |
 | `feed_parser.py` | Parses Atom 1.0 and RSS 2.0 XML into structured `Incident` objects. Extracts status, summary, and affected components from HTML content. |
-| `models.py` | Typed data models — `Incident`, `Component`, `ProviderConfig`, `TrackerSettings`. |
+| `models.py` | Typed data models - `Incident`, `Component`, `ProviderConfig`, `TrackerSettings`. |
 | `notifier.py` | Formats and prints incidents to the console in the specification format. |
 | `config.py` | Loads `config.yaml` into typed configuration objects. Falls back to sensible defaults. |
 
@@ -133,10 +133,10 @@ pip install -r requirements.txt
 ```
 
 **Dependencies**:
-- `aiohttp` — async HTTP client
-- `aiofiles` — async file I/O
-- `pyyaml` — YAML config parsing
-- `python-dateutil` — flexible datetime parsing
+- `aiohttp` - async HTTP client
+- `aiofiles` - async file I/O
+- `pyyaml` - YAML config parsing
+- `python-dateutil` - flexible datetime parsing
 
 ---
 
