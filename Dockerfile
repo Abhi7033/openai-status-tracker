@@ -9,5 +9,7 @@ COPY tracker/ tracker/
 COPY config.yaml .
 
 ENV PYTHONUNBUFFERED=1
+ENV PORT=10000
+EXPOSE 10000
 
 CMD ["python", "-m", "tracker"]

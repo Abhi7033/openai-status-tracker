@@ -13,11 +13,13 @@ Usage:
 from __future__ import annotations
 
 import asyncio
+import os
 import signal
 import sys
 from typing import List
 
 import aiohttp
+from aiohttp import web
 
 from tracker.config import load_config
 from tracker.models import ProviderConfig, TrackerSettings
@@ -100,6 +102,16 @@ async def async_main() -> None:
 
     loop = asyncio.get_running_loop()
     _handle_signals(tracker, loop)
+
+    # Start a minimal health-check server for hosted deployments
+    port = int(os.environ.get("PORT", 10000))
+    app = web.Application()
+    app.router.add_get("/", lambda _: web.json_response({"status": "running"}))
+    app.router.add_get("/health", lambda _: web.json_response({"status": "healthy"}))
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, "0.0.0.0", port)
+    await site.start()
 
     await tracker.run()
 

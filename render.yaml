@@ -1,9 +1,8 @@
 services:
-  - type: worker
+  - type: web
     name: openai-status-tracker
-    runtime: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: python -m tracker
+    runtime: docker
+    plan: free
     envVars:
       - key: PYTHONUNBUFFERED
         value: "1"
