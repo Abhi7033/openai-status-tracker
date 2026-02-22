@@ -132,7 +132,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-**Dependencies** (minimal, no heavy frameworks):
+**Dependencies**:
 - `aiohttp` — async HTTP client
 - `aiofiles` — async file I/O
 - `pyyaml` — YAML config parsing
@@ -216,7 +216,7 @@ settings:
 
 The problem statement specifically asks for a solution that scales to 100+ status pages. Here is how this architecture handles it:
 
-**Adding a provider is a config change, not a code change:**
+**We can Add a provider just by changing in config.yaml file:**
 
 ```yaml
 providers:
