@@ -2,8 +2,6 @@
 
 A lightweight, event-driven Python application that automatically tracks and logs service updates from the [OpenAI Status Page](https://status.openai.com/). Detects new incidents, outages, and degradations in real time and prints structured updates to the console.
 
-Built as a submission for the Bolna Backend Engineering Hackathon.
-
 ---
 
 ## Table of Contents
@@ -280,6 +278,8 @@ docker run --rm openai-status-tracker
 ### Render
 
 A `render.yaml` is included for one-click deployment as a background worker.
+
+**Live instance:** [https://openai-status-tracker-o26i.onrender.com](https://openai-status-tracker-o26i.onrender.com)
 
 ---
 
